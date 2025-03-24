@@ -1,6 +1,6 @@
+package models;
 
-
-class Carte {
+public class Carte {
   private String nom;
   private String prenom;
   private String typeContrat;
@@ -11,6 +11,22 @@ class Carte {
     this.prenom = prenom;
     this.typeContrat = typeContrat;
     this.soldeForfait = soldeForfait;
+  }
+
+  public String getNom() {
+    return nom;
+  }
+
+  public String getPrenom() {
+    return prenom;
+  }
+
+  public String getTypeContrat() {
+    return typeContrat;
+  }
+
+  public float getSoldeForfait() {
+    return soldeForfait;
   }
 
   public boolean estUnForfait() {
