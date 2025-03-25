@@ -11,7 +11,8 @@ public class MainSwing extends JFrame {
 
     public MainSwing() {
         // Création des objets
-        carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
+        //carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
+        carte = new Carte("Dupont", "Jean", "Abonnement", 100.0f, "2025-01-01", "2025-12-31");
         TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
         borne = new Borne(1, typeRecharge);
         borne.insererCarte(carte);

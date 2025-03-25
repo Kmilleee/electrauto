@@ -42,6 +42,14 @@ public class Carte {
     return soldeForfait;
   }
 
+  public String getDateDebutAbonnement() {
+    return dateDebutAbonnement;
+  }
+
+  public String getDateFinAbonnement() {
+    return dateFinAbonnement;
+  }
+
   public boolean estUnForfait() {
     return typeContrat.equals("Forfait");
   }
@@ -53,7 +61,7 @@ public class Carte {
   public float lireSolde() {
     if (!estUnForfait()) {
       throw new UnsupportedOperationException("Les abonnements n'ont pas de solde.");
-  }
+    }
     return soldeForfait;
   }
 
@@ -65,12 +73,12 @@ public class Carte {
         throw new IllegalArgumentException("Solde insuffisant pour cette charge.");
     }
     soldeForfait -= montant;
-}
+  }
 
-public boolean estAbonnementValide(String dateActuelle) {
-  if (estUnForfait()) return false; // Un forfait n'a pas de validité temporelle
+  public boolean estAbonnementValide(String dateActuelle) {
+    if (estUnForfait()) return false; // Un forfait n'a pas de validité temporelle
+    if (dateActuelle == null) return false;
 
-  return dateActuelle.compareTo(dateDebutAbonnement) >= 0 && dateActuelle.compareTo(dateFinAbonnement) <= 0;
-}
-   
+    return dateActuelle.compareTo(dateDebutAbonnement) >= 0 && dateActuelle.compareTo(dateFinAbonnement) <= 0;
+  }
 }
