@@ -1,7 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 import models.Borne;
 import models.Carte;
 import models.TypeRecharge;
@@ -13,7 +11,7 @@ public class MainSwing extends JFrame {
 
     public MainSwing() {
         // Création des objets
-        carte = new Carte("Dupont", "Jean", "Forfait", 100.0f);
+        carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
         TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
         borne = new Borne(1, typeRecharge);
         borne.insererCarte(carte);

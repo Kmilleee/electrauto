@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import models.Borne;
 import models.Carte;
 import models.TypeRecharge;
@@ -8,7 +7,7 @@ import utils.ClearScreen;
 public class Main {
     public static void main(String[] args) {
         // Création d'une carte
-        Carte carte = new Carte("Dupont", "Jean", "Forfait", 100.0f);
+        Carte carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
 
         // Création d'un type de recharge
         TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
