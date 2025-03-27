@@ -7,17 +7,20 @@ import models.TypeRecharge;
 import utils.ClearScreen;
 
 public class Main {
-    public static void main(String[] args) {
-        // Création d'une carte
-        Carte carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
-
-        // Création d'un type de recharge
-        TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
-
-        // Création d'une borne
-        Borne borne = new Borne(1, typeRecharge);
-
-        Batterie batterie = new Batterie("1234", "Tesla", 100, 50, typeRecharge);
+    private static TypeRecharge typeRecharge;
+    
+        public static void main(String[] args) {
+            // Création d'une carte
+            Carte carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
+    
+            // Création d'un type de recharge
+            TypeRecharge recharge = new TypeRecharge(TypeRecharge.TypeCharge.Normal);
+    
+    
+            // Création d'une borne
+            Borne borne = new Borne(1, recharge);
+    
+            Batterie batterie = new Batterie("1234", "Tesla", 100, 50, typeRecharge);
 
         borne.insererCarte(carte);
         Scanner scanner = new Scanner(System.in);
