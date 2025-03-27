@@ -10,15 +10,14 @@ public class MainSwing extends JFrame {
     private Borne borne;
     private Carte carte;
     private Batterie batterie;
-        private TypeRecharge typeRecharge;
-    
-        public MainSwing() {
-            // Création des objets
-            //carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
-            carte = new Carte("Dupont", "Jean", "Abonnement", 100.0f, "2025-01-01", "2025-12-31");
-            batterie = new Batterie("1234", "Tesla", 100, 50, typeRecharge);
-        TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
+
+    public MainSwing() {
+        // Création des objets
+        //carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
+        carte = new Carte("Dupont", "Jean", "Abonnement", 100.0f, "2025-01-01", "2025-12-31");
+        TypeRecharge typeRecharge = new TypeRecharge(TypeRecharge.TypeCharge.Normal);
         borne = new Borne(1, typeRecharge);
+        batterie = new Batterie("1234", "Tesla", 100, 50, typeRecharge);
         borne.insererCarte(carte);
 
         // Configuration de la fenêtre
