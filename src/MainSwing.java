@@ -1,8 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
+import models.Batterie;
 import models.Borne;
 import models.Carte;
-import models.Batterie;
 import models.TypeRecharge;
 import utils.ClearScreen;
 
@@ -64,8 +64,9 @@ public class MainSwing extends JFrame {
         
             // Vérifier si l'utilisateur a fait un choix
             if (choix != null) {
-                borne.setTypeRecharge(new TypeRecharge(choix)); // Mettre à jour le type de charge de la borne
-                JOptionPane.showMessageDialog(this, "Vous avez sélectionné : " + choix.name(), "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                TypeRecharge nouveauType = new TypeRecharge(choix);
+                borne.setTypeRecharge(nouveauType);
+                batterie.setTypeRecharge(nouveauType);
             } else {
                 JOptionPane.showMessageDialog(this, "Aucun type de charge sélectionné.", "Erreur", JOptionPane.WARNING_MESSAGE);
             }
