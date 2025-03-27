@@ -1,26 +1,38 @@
 package models;
 
 public class TypeRecharge {
+    public enum TypeCharge {
+        Normal(3),
+        Rapide(50),
+        Ultra_Rapide(150);
 
-    private String nom; 
-    private int puissance; 
+        private final int puissance;
 
-    public TypeRecharge(String nom, int puissance) {
-        this.nom = nom;
-        this.puissance = puissance;
+        TypeCharge(int puissance) {
+            this.puissance = puissance;
+        }
+
+        public int getPuissance() {
+            return this.puissance;
+        }
+    }
+
+    private TypeCharge type;
+
+    public TypeRecharge(TypeCharge type) {
+        this.type = type;
     }
 
     public String getNom() {
-        return nom;
+        return type.name();
     }
 
     public int getPuissance() {
-        return puissance;
+        return type.getPuissance();
     }
 
     @Override
     public String toString() {
-        return  nom +
-                ", puissance : " + puissance + " kW" ;
+        return type.name() + ", puissance : " + type.getPuissance() + " kW";
     }
 }

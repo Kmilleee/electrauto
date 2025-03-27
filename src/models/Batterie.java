@@ -4,7 +4,7 @@ public class Batterie {
     private String reference;
     private String fabricant;
     private int chargeMax;      // en kwh
-    private int chargeActuelle; // en kwh
+    private int chargeActuelle; // en kwh  
     private TypeRecharge typeRecharge;
 
     public Batterie(String reference, String fabricant, int chargeMax, int chargeActuelle, TypeRecharge typeRecharge) {
