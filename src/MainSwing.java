@@ -75,7 +75,7 @@ public class MainSwing extends JFrame {
 
         btnCharger.addActionListener(e -> {
             ClearScreen.clearScreen();
-            String charge = borne.charger();
+            String charge = borne.charger(batterie);
             JOptionPane.showMessageDialog(this, charge, "Informations", JOptionPane.INFORMATION_MESSAGE);
         });
 

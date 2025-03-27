@@ -3,8 +3,8 @@ package models;
 public class Batterie {
     private String reference;
     private String fabricant;
-    private int chargeMax;      // en kwh
-    private int chargeActuelle; // en kwh  
+    private int chargeMax;      // en kWh (kilowatt-heures)
+    private int chargeActuelle; // en kWh (kilowatt-heures)  
     private TypeRecharge typeRecharge;
 
     public Batterie(String reference, String fabricant, int chargeMax, int chargeActuelle, TypeRecharge typeRecharge) {
@@ -43,6 +43,25 @@ public class Batterie {
 
     public TypeRecharge getTypeRecharge() {
         return typeRecharge;
+    }
+
+    public String calculerTempsRecharge() {
+        if (typeRecharge == null) {
+            throw new IllegalStateException("Le type de recharge n'est pas défini");
+        }
+        int puissanceRecharge = typeRecharge.getPuissance();
+        int chargeRestante = chargeMax - chargeActuelle; 
+            
+        double tempsEnHeures = (double) chargeRestante / puissanceRecharge;
+        
+        int heures = (int) tempsEnHeures;
+        int minutes = (int) ((tempsEnHeures - heures) * 60);
+        
+        if (heures == 0) {
+            return String.format("%d minutes", minutes);
+        }
+        
+        return String.format("%d heures et %d minutes", heures, minutes);
     }
 
     @Override
