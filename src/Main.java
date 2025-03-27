@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import models.Batterie;
 import models.Borne;
 import models.Carte;
 import models.TypeRecharge;
@@ -14,6 +16,8 @@ public class Main {
 
         // Création d'une borne
         Borne borne = new Borne(1, typeRecharge);
+
+        Batterie batterie = new Batterie("1234", "Tesla", 100, 50, typeRecharge);
 
         borne.insererCarte(carte);
         Scanner scanner = new Scanner(System.in);
@@ -31,7 +35,7 @@ public class Main {
             switch (choix) {
                 case 1:
                 ClearScreen.clearScreen();
-                borne.afficher();
+                borne.afficher(batterie);
                 break;
                 case 2:
                 ClearScreen.clearScreen();

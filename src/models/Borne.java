@@ -36,7 +36,7 @@ public class Borne {
         System.out.println("Carte insérée");
     }
 
-    public String afficher() {
+    public String afficher( Batterie batterie) {
         StringBuilder info = new StringBuilder();
         info.append("Infos de la borne :").append("\n")
                 .append("Numero de la borne : ").append(id).append("\n")
@@ -48,13 +48,20 @@ public class Borne {
                     .append("Nom : ").append(carte.getNom()).append("\n")
                     .append("Prenom : ").append(carte.getPrenom()).append("\n");
 
-            if (carte.estUnForfait()) {
-                info.append("solde : ").append(carte.getSoldeForfait()).append("€\n");
-            } else {
-                info.append("Type : Abonnement\n")
+                    
+                    if (carte.estUnForfait()) {
+                        info.append("solde : ").append(carte.getSoldeForfait()).append("€\n");
+                    } else {
+                        info.append("Type : Abonnement\n")
                         .append("Date de début : ").append(carte.getDateDebutAbonnement()).append("\n")
-                        .append("Date de fin : ").append(carte.getDateFinAbonnement()).append("\n");
-            }
+                        .append("Date de fin : ").append(carte.getDateFinAbonnement()).append("\n").append("\n");
+                    }
+                    info.append("Infos de la batterie :\n")
+                            .append("rédéfence : ").append(batterie.getRef()).append("\n")
+                            .append("Fabricant : ").append(batterie.getFabricant()).append("\n")
+                            .append("Charge maximale : ").append(batterie.getChargeMax()).append("kW\n")
+                            .append("Charge actuelle : ").append(batterie.getChargeActuelle()).append("kWh\n")
+                            .append("Type de recharge : ").append(batterie.getTypeRecharge()).append("\n");
         } else {
             info.append("Aucune carte insérée : L'abonnement ou le forfait n'est pas valide\n");
 
