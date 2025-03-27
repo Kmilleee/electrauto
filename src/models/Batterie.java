@@ -45,6 +45,10 @@ public class Batterie {
         return typeRecharge;
     }
 
+    public void setTypeRecharge(TypeRecharge typeRecharge) {
+        this.typeRecharge = typeRecharge;
+    }
+
     public String calculerTempsRecharge() {
         if (typeRecharge == null) {
             throw new IllegalStateException("Le type de recharge n'est pas défini");
