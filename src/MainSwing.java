@@ -29,6 +29,7 @@ public class MainSwing extends JFrame {
         // Création des boutons
         JButton btnAfficher = new JButton("Afficher infos");
         JButton btnInsererPrise = new JButton("Insérer la prise");
+        JButton btnSelectionCharge = new JButton("Selectionner le type de charge souhaité");
         JButton btnCharger = new JButton("Démarrer chargement");
         JButton btnQuitter = new JButton("Quitter");
 
@@ -46,6 +47,32 @@ public class MainSwing extends JFrame {
             JOptionPane.showMessageDialog(this, inserer, "Informations",  JOptionPane.INFORMATION_MESSAGE);
         });
 
+        btnSelectionCharge.addActionListener(e -> {
+            // Options disponibles dans l'énumération TypeCharge
+            TypeRecharge.TypeCharge[] options = TypeRecharge.TypeCharge.values();
+        
+            // Afficher une boîte de dialogue avec une liste déroulante
+            TypeRecharge.TypeCharge choix = (TypeRecharge.TypeCharge) JOptionPane.showInputDialog(
+                    this,
+                    "Sélectionnez le type de charge :",
+                    "Type de Charge",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0] // Option par défaut
+            );
+        
+            // Vérifier si l'utilisateur a fait un choix
+            if (choix != null) {
+                borne.setTypeRecharge(new TypeRecharge(choix)); // Mettre à jour le type de charge de la borne
+                JOptionPane.showMessageDialog(this, "Vous avez sélectionné : " + choix.name(), "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Aucun type de charge sélectionné.", "Erreur", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
+
+
         btnCharger.addActionListener(e -> {
             ClearScreen.clearScreen();
             String charge = borne.charger();
@@ -57,6 +84,7 @@ public class MainSwing extends JFrame {
         // Ajout des boutons à la fenêtre
         add(btnAfficher);
         add(btnInsererPrise);
+        add(btnSelectionCharge);
         add(btnCharger);
         add(btnQuitter);
 
