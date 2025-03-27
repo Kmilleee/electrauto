@@ -12,7 +12,7 @@ public class MainSwing extends JFrame {
     public MainSwing() {
         // Création des objets
         //carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
-        carte = new Carte("Dupont", "Jean", "Abonnement", 100.0f, "2025-01-01", "2025-12-31");
+        carte = new Carte("Dupont", "Jean", "Abonnement", 100.0f, "2025-01-01", "2025-01-31");
         TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
         borne = new Borne(1, typeRecharge);
         borne.insererCarte(carte);
@@ -35,17 +35,18 @@ public class MainSwing extends JFrame {
             String info = borne.afficher();
             JOptionPane.showMessageDialog(this, info, "Informations", JOptionPane.INFORMATION_MESSAGE);
         });
-
+        
         btnInsererPrise.addActionListener(e -> {
             ClearScreen.clearScreen();
-            borne.insererPrise();
-            JOptionPane.showMessageDialog(this, "Prise insérée !", "Action", JOptionPane.INFORMATION_MESSAGE);
+            String inserer = borne.insererPrise();
+            // borne.insererPrise();
+            JOptionPane.showMessageDialog(this, inserer, "Informations",  JOptionPane.INFORMATION_MESSAGE);
         });
 
         btnCharger.addActionListener(e -> {
             ClearScreen.clearScreen();
-            borne.charger();
-            JOptionPane.showMessageDialog(this, "Chargement en cours...", "Action", JOptionPane.INFORMATION_MESSAGE);
+            String charge = borne.charger();
+            JOptionPane.showMessageDialog(this, charge, "Informations", JOptionPane.INFORMATION_MESSAGE);
         });
 
         btnQuitter.addActionListener(e -> System.exit(0));
