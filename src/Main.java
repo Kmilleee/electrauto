@@ -15,11 +15,11 @@ public class Main {
     
             // Création d'un type de recharge
             TypeRecharge recharge = new TypeRecharge(TypeRecharge.TypeCharge.Normal);
-    
-    
+
+            
             // Création d'une borne
-            Borne borne = new Borne(1, recharge);
-    
+            Borne borne = new Borne(1, recharge);    
+
             Batterie batterie = new Batterie("1234", "Tesla", 100, 50, typeRecharge);
 
         borne.insererCarte(carte);

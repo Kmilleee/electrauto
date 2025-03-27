@@ -69,6 +69,10 @@ public class Borne {
         return info.toString();
     }
 
+    public void setTypeRecharge(TypeRecharge typeRecharge) {
+        this.typeRecharge = typeRecharge;
+    }
+
     public String insererPrise() {
         StringBuilder inserer = new StringBuilder();
         if (carte == null) {
