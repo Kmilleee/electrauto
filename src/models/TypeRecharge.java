@@ -20,9 +20,7 @@ public class TypeRecharge {
 
     @Override
     public String toString() {
-        return "TypeRecharge{" +
-                "nom='" + nom + '\'' +
-                ", puissance=" + puissance + " kW" +
-                '}';
+        return  nom +
+                ", puissance : " + puissance + " kW" ;
     }
 }

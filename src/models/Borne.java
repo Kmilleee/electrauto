@@ -38,22 +38,22 @@ public class Borne {
 
     public String afficher() {
         StringBuilder info = new StringBuilder();
-        info.append("Borne{")
-                .append("id=").append(id)
-                .append(", typeRecharge=").append(typeRecharge)
-                .append("}\n");
+        info.append("Infos de la borne :").append("\n")
+                .append("Numero de la borne : ").append(id).append("\n")
+                .append("Types de recharge de la borne : ").append(typeRecharge).append("\n")
+                .append("\n");
 
         if (carte != null) {
             info.append("Infos de la carte :\n")
-                    .append("nom='").append(carte.getNom()).append("'\n")
-                    .append("prenom='").append(carte.getPrenom()).append("'\n");
+                    .append("Nom : ").append(carte.getNom()).append("\n")
+                    .append("Prenom : ").append(carte.getPrenom()).append("\n");
 
             if (carte.estUnForfait()) {
-                info.append("solde=").append(carte.getSoldeForfait()).append("€\n");
+                info.append("solde : ").append(carte.getSoldeForfait()).append("€\n");
             } else {
-                info.append("type=Abonnement\n")
-                        .append("dateDebut=").append(carte.getDateDebutAbonnement()).append("\n")
-                        .append("dateFin=").append(carte.getDateFinAbonnement()).append("\n");
+                info.append("Type : Abonnement\n")
+                        .append("Date de début : ").append(carte.getDateDebutAbonnement()).append("\n")
+                        .append("Date de fin : ").append(carte.getDateFinAbonnement()).append("\n");
             }
         } else {
             info.append("Aucune carte insérée : L'abonnement ou le forfait n'est pas valide\n");
