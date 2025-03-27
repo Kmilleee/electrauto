@@ -88,13 +88,14 @@ public class Borne {
     return inserer.toString();
 }
 
-public String charger() {
+public String charger(Batterie batterie) {
     StringBuilder charge = new StringBuilder();
     if (!priseInseree) {
         charge.append("Impossible de charger : prise non insérée");
     } else {
-        priseInseree = true;
+        enChargement = true;
         charge.append("Chargement en cours...\n");
+        charge.append("Temps de recharge estimé : ").append(batterie.calculerTempsRecharge());
     }
     
     return charge.toString();
