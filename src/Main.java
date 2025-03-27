@@ -10,10 +10,11 @@ public class Main {
         Carte carte = new Carte("Dupont", "Jean", "Forfait", 100.0f, null, null);
 
         // Création d'un type de recharge
-        TypeRecharge typeRecharge = new TypeRecharge("Rapide", 50);
+        TypeRecharge recharge = new TypeRecharge(TypeRecharge.TypeCharge.Normal);
+
 
         // Création d'une borne
-        Borne borne = new Borne(1, typeRecharge);
+        Borne borne = new Borne(1, recharge);
 
         borne.insererCarte(carte);
         Scanner scanner = new Scanner(System.in);
