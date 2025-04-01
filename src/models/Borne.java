@@ -73,6 +73,14 @@ public class Borne {
         this.typeRecharge = typeRecharge;
     }
 
+    public boolean isEnChargement() {
+        return enChargement;
+    }
+
+    public void setEnChargement(boolean enChargement) {
+        this.enChargement = enChargement;
+    }
+
     public String insererPrise() {
         StringBuilder inserer = new StringBuilder();
         if (carte == null) {
@@ -95,7 +103,7 @@ public String charger(Batterie batterie) {
     } else {
         enChargement = true;
         charge.append("Chargement en cours...\n");
-        charge.append("Temps de recharge estimé : ").append(batterie.calculerTempsRecharge());
+        charge.append("Temps de recharge estimé : ").append(batterie.calculerTempsRecharge(System.currentTimeMillis() / 1000));
     }
     
     return charge.toString();
