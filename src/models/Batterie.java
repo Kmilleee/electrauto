@@ -3,9 +3,10 @@ package models;
 public class Batterie {
     private String reference;
     private String fabricant;
-    private int chargeMax;      // en kWh (kilowatt-heures)
-    private int chargeActuelle; // en kWh (kilowatt-heures)  
+    private int chargeMax;      
+    private int chargeActuelle; 
     private TypeRecharge typeRecharge;
+    private long tempsInitialCharge; 
 
     public Batterie(String reference, String fabricant, int chargeMax, int chargeActuelle, TypeRecharge typeRecharge) {
         this.reference = reference;
@@ -41,6 +42,23 @@ public class Batterie {
         this.chargeActuelle = chargeActuelle;
     }
 
+    public void mettreAJourCharge(int tempsEnSecondes) {
+        if (typeRecharge == null) {
+            throw new IllegalStateException("Le type de recharge n'est pas défini");
+        }
+        
+    
+        double tempsEnHeures = tempsEnSecondes / 3600.0;
+        double chargeAjoutee = typeRecharge.getPuissance() * tempsEnHeures;
+        
+        int nouvelleCharge = (int) Math.min(chargeMax, chargeActuelle + chargeAjoutee);
+        setChargeActuelle(nouvelleCharge);
+    }
+
+    public boolean estChargee() {
+        return chargeActuelle >= chargeMax;
+    }
+
     public TypeRecharge getTypeRecharge() {
         return typeRecharge;
     }
@@ -49,23 +67,39 @@ public class Batterie {
         this.typeRecharge = typeRecharge;
     }
 
-    public String calculerTempsRecharge() {
+    public void setTempsInitialCharge(long tempsInitialCharge) {
+        this.tempsInitialCharge = tempsInitialCharge;
+    }
+
+    public String calculerTempsRecharge(long tempsActuel) {
         if (typeRecharge == null) {
             throw new IllegalStateException("Le type de recharge n'est pas défini");
         }
+
         int puissanceRecharge = typeRecharge.getPuissance();
         int chargeRestante = chargeMax - chargeActuelle; 
-            
-        double tempsEnHeures = (double) chargeRestante / puissanceRecharge;
+        double tempsTotalEnSecondes = (chargeRestante * 3600.0) / puissanceRecharge;
         
-        int heures = (int) tempsEnHeures;
-        int minutes = (int) ((tempsEnHeures - heures) * 60);
+        long tempsEcoule = tempsActuel - tempsInitialCharge;
         
-        if (heures == 0) {
-            return String.format("%d minutes", minutes);
+        long tempsRestant = (long) (tempsTotalEnSecondes - tempsEcoule);
+        
+        if (tempsRestant <= 0) {
+            return "0 secondes";
         }
         
-        return String.format("%d heures et %d minutes", heures, minutes);
+        int heures = (int) (tempsRestant / 3600);
+        int minutes = (int) ((tempsRestant % 3600) / 60);
+        int secondes = (int) (tempsRestant % 60);
+        
+        if (heures == 0) {
+            if (minutes == 0) {
+                return String.format("%d secondes", secondes);
+            }
+            return String.format("%d minutes et %d secondes", minutes, secondes);
+        }
+        
+        return String.format("%d heures, %d minutes et %d secondes", heures, minutes, secondes);
     }
 
     @Override

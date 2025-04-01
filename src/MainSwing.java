@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import javax.swing.*;
 import models.Batterie;
 import models.Borne;
@@ -10,6 +12,11 @@ public class MainSwing extends JFrame {
     private Borne borne;
     private Carte carte;
     private Batterie batterie;
+    private JProgressBar progressBar;
+    private JLabel tempsLabel;
+    private Timer chargeTimer;
+    private LocalDateTime debutChargement;
+    private JDialog progressDialog;
 
     public MainSwing() {
         // Création des objets
@@ -72,12 +79,18 @@ public class MainSwing extends JFrame {
             }
         });
 
-
-
         btnCharger.addActionListener(e -> {
             ClearScreen.clearScreen();
-            String charge = borne.charger(batterie);
-            JOptionPane.showMessageDialog(this, charge, "Informations", JOptionPane.INFORMATION_MESSAGE);
+            if (!borne.isEnChargement()) {
+                String charge = borne.charger(batterie);
+                if (charge.contains("Chargement en cours")) {
+                    afficherFenetreProgression();
+                } else {
+                    JOptionPane.showMessageDialog(this, charge, "Informations", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Le chargement est déjà en cours", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         btnQuitter.addActionListener(e -> System.exit(0));
@@ -91,6 +104,72 @@ public class MainSwing extends JFrame {
 
         // Rendre visible
         setVisible(true);
+    }
+
+    private void afficherFenetreProgression() {
+        progressDialog = new JDialog(this, "Progression du chargement", true);
+        progressDialog.setLayout(new BorderLayout());
+        progressDialog.setSize(300, 150);
+
+        // Barre de progression
+        progressBar = new JProgressBar(0, 100);
+        progressBar.setStringPainted(true);
+        progressBar.setString("0%");
+
+        tempsLabel = new JLabel("Temps restant : ");
+
+        JButton stopButton = new JButton("Arrêter le chargement");
+        stopButton.addActionListener(e -> arreterChargement());
+
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.add(progressBar, BorderLayout.CENTER);
+        mainPanel.add(tempsLabel, BorderLayout.NORTH);
+        mainPanel.add(stopButton, BorderLayout.SOUTH);
+
+        progressDialog.add(mainPanel);
+        progressDialog.setLocationRelativeTo(this);
+        progressDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+        // Démarrage du timer
+        debutChargement = LocalDateTime.now();
+        batterie.setTempsInitialCharge(System.currentTimeMillis() / 1000);
+        demarrerTimer();
+
+        progressDialog.setVisible(true);
+    }
+
+    private void demarrerTimer() {
+        chargeTimer = new Timer(1000, e -> {
+            if (batterie.estChargee()) {
+                arreterChargement();
+                return;
+            }
+
+            // Mise à jour de la charge
+            long tempsEcoule = ChronoUnit.SECONDS.between(debutChargement, LocalDateTime.now());
+            batterie.mettreAJourCharge((int) tempsEcoule);
+
+            // Mise à jour de la barre de progression
+            int pourcentage = (int) ((batterie.getChargeActuelle() * 100.0) / batterie.getChargeMax());
+            progressBar.setValue(pourcentage);
+            progressBar.setString(pourcentage + "%");
+
+            // Mise à jour du temps restant
+            long tempsActuel = System.currentTimeMillis() / 1000;
+            tempsLabel.setText("Temps restant : " + batterie.calculerTempsRecharge(tempsActuel));
+        });
+        chargeTimer.start();
+    }
+
+    private void arreterChargement() {
+        if (chargeTimer != null) {
+            chargeTimer.stop();
+        }
+        if (progressDialog != null) {
+            progressDialog.dispose();
+        }
+        borne.setEnChargement(false);
     }
 
     public static void main(String[] args) {
